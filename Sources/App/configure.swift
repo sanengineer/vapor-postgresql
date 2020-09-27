@@ -21,15 +21,39 @@ public func configure(
     try services.register(LeafProvider())
     config.prefer(LeafRenderer.self, for: ViewRenderer.self)
      
-    
     // Register providers first
     try services.register(FluentPostgreSQLProvider())
+
+    // Configure With Dummy a PostgreSQL database
+    var databaseConfig = DatabasesConfig()
+    let db = try PostgreSQLDatabase(storage: .file(path: "\(directoryConfig.workDir)juices.json"))
     
+    // Configure With Real a PostgreSQL database
+    // let config = PostgreSQLDatabaseConfig(
+    //     hostname: "localhost",
+    //     port: 5432,
+    //     username: "metalbee",
+    //     database: "JuiceCorner",
+    //     password: nil,
+    //     transport: .cleartext)
+    // let postgres = PostgreSQLDatabase(config: config)
+
+    /// Register the configured PostgreSQL database to the database config.
+    // databasesConfig.add(database: postgres, as: .psql) // Configure for real PSQL
+    databasesConfig.add(database: json, as: .psql)
+    services.register(databasesConfig)
+    
+    /// Configure migrations
+    var migrations = MigrationConfig()
+    migrations.add(model: Juice.self, database: .psql)
+    migrations.add(model: Order.self, database: .psql)
+    services.register(migrations)
+
     // Register middleware
     var middlewares = MiddlewareConfig() // Create _empty_ middleware config
 
     let corsConfiguration = CORSMiddleware.Configuration(
-        allowedOrigin: .all,
+        allowedOrigin: .all,    // Wildcard All Origin (Domain)
         allowedMethods: [.GET, .POST, .PUT, .OPTIONS, .DELETE, .PATCH],
         allowedHeaders: [.accept, .authorization, .contentType, .origin, .xRequestedWith, .userAgent, .accessControlAllowOrigin]
     ) // CORS Allow Control Acces Cross Origin Policy
@@ -38,28 +62,6 @@ public func configure(
     middlewares.use(corsMiddleware) // Allow Control Access Cross Origin
     middlewares.use(FileMiddleware.self) // Serves files from `Public/` directory
     middlewares.use(ErrorMiddleware.self) // Catches errors and converts to HTTP response
-    services.register(middlewares)
-    
-    // Configure a PostgreSQL database
-    let config = PostgreSQLDatabaseConfig(
-        hostname: "localhost",
-        port: 5432,
-        username: "metalbee",
-        database: "JuiceCorner",
-        password: nil,
-        transport: .cleartext)
-    let postgres = PostgreSQLDatabase(config: config)
-    
-    /// Register the configured PostgreSQL database to the database config.
-    var databases = DatabasesConfig()
-    databases.add(database: postgres, as: .psql)
-    services.register(databases)
-    
-    /// Configure migrations
-    var migrations = MigrationConfig()
-    migrations.add(model: Juice.self, database: .psql)
-    migrations.add(model: Order.self, database: .psql)
-    services.register(migrations)
-    
+    services.register(middlewares)    
     
 }
