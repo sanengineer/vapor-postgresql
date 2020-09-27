@@ -28,6 +28,9 @@ public func configure(
     var databaseConfig = DatabasesConfig()
     let db = try PostgreSQLDatabase(storage: .file(path: "\(directoryConfig.workDir)juices.json"))
     
+    //
+    // Ready To Use - Inactivate The Dummy PSQL To Use Code Below
+    // 
     // Configure With Real a PostgreSQL database
     // let config = PostgreSQLDatabaseConfig(
     //     hostname: "localhost",
@@ -40,7 +43,7 @@ public func configure(
 
     /// Register the configured PostgreSQL database to the database config.
     // databasesConfig.add(database: postgres, as: .psql) // Configure for real PSQL
-    databasesConfig.add(database: json, as: .psql)
+    databasesConfig.add(database: json, as: .psql)  // Configure for dummy PSQL
     services.register(databasesConfig)
     
     /// Configure migrations
