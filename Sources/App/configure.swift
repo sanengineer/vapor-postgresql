@@ -26,36 +26,8 @@ public func configure(
     services.register(directoryConfig)
 
     // Register providers first
-    // try services.register(FluentPostgreSQLProvider()) // Configure to Real PSQL
-    try services.register(FluentProvider()) // Configure to Dummy PSQL
-
-    // Configure With Dummy a PostgreSQL database
-    var databaseConfig = DatabasesConfig()
-    let db = try PostgreSQLDatabase(storage: .file(path: "\(directoryConfig.workDir)juices.db"))
-    
-    //
-    // Ready To Use - Inactivate The Dummy PSQL To Use Code Below
-    // 
-    // Configure With Real a PostgreSQL database
-    // let config = PostgreSQLDatabaseConfig(
-    //     hostname: "localhost",
-    //     port: 5432,
-    //     username: "metalbee",
-    //     database: "JuiceCorner",
-    //     password: nil,
-    //     transport: .cleartext)
-    // let postgres = PostgreSQLDatabase(config: config)
-
-    /// Register the configured PostgreSQL database to the database config.
-    // databasesConfig.add(database: postgres, as: .psql) // Configure for real PSQL
-    databaseConfig.add(database: db, as: .psql)  // Configure for dummy PSQL
-    services.register(databaseConfig)
-    
-    /// Configure migrations
-    var migrations = MigrationConfig()
-    migrations.add(model: Juice.self, database: .psql)
-    migrations.add(model: Order.self, database: .psql)
-    services.register(migrations)
+    try services.register(FluentPostgreSQLProvider()) // Configure to Real PSQL
+    // try services.register(FluentProvider()) // Configure to Dummy PSQL
 
     // Register middleware
     var middlewares = MiddlewareConfig() // Create _empty_ middleware config
@@ -70,6 +42,33 @@ public func configure(
     middlewares.use(corsMiddleware) // Allow Control Access Cross Origin
     middlewares.use(FileMiddleware.self) // Serves files from `Public/` directory
     middlewares.use(ErrorMiddleware.self) // Catches errors and converts to HTTP response
-    services.register(middlewares)    
+    services.register(middlewares)   
+
+    //
+    // Ready To Use - Inactivate The Dummy PSQL To Use Code Below
+    // 
+    // Configure With Real a PostgreSQL database
+    let config = PostgreSQLDatabaseConfig(
+        hostname: "localhost",
+        port: 5432,
+        username: "metalbee",
+        database: "JuicesCorner",
+        password: nil,
+        transport: .cleartext)
+    let postgres = PostgreSQLDatabase(config: config)
+
+    // Register the configured PostgreSQL database to the database config.
+    var databasesConfig = DatabasesConfig()
+    databasesConfig.add(database: postgres, as: .psql) // Configure for real PSQL
+    services.register(databasesConfig)
+
+    // let db = try PostgreSQLDatabase(storage: .file(path: "\(directoryConfig.workDir)juices.db"))   
+    // databaseConfig.add(database: db, as: .psql)  // Configure for dummy PSQL
+    
+    /// Configure migrations
+    var migrations = MigrationConfig()
+    migrations.add(model: Juice.self, database: .psql)
+    migrations.add(model: Order.self, database: .psql)
+    services.register(migrations)
     
 }
