@@ -10,7 +10,7 @@
     <body>
     <div class="bg-dark">
     <div class="container-md container-sm">
-        <h1 class="h5 py-3 text-white font-weight-bolder">Vapor PostgreSQL Simple API</h1>
+        <h1 class="h5 py-3 text-white font-weight-bolder">Swift PostgreSQL Simple API</h1>
     </div>
     </div>
     <div class="container-md container-sm my-5">
