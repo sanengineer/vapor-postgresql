@@ -44,26 +44,24 @@ public func configure(
     middlewares.use(ErrorMiddleware.self) // Catches errors and converts to HTTP response
     services.register(middlewares)   
 
-    //
-    // Ready To Use - Inactivate The Dummy PSQL To Use Code Below
-    // 
+    
     // Configure With a PostgreSQL database local
-    // let config = PostgreSQLDatabaseConfig(
-    //     hostname: "localhost",
-    //     port: 5432,
-    //     username: "metalbee",
-    //     database: "JuicesCorner",
-    //     password: nil,
-    //     transport: .cleartext)
+    let config = PostgreSQLDatabaseConfig(
+        hostname: "localhost",
+        port: 5432,
+        username: "metalbee",
+        database: "JuicesCorner",
+        password: nil,
+        transport: .cleartext)
     
     // Configure a PostgreSQL database cloud
-    let config = PostgreSQLDatabaseConfig(
-        hostname: "ec2-52-22-216-69.compute-1.amazonaws.com",
-        port: 5432,
-        username: "ikqgoxsksdjkhi",
-        database: "d9chpkcf2qdm2t",
-        password: "4e54b1a79c37eaf1025e2b8da0921cd3a0c6ca7122dd642164a517000e32ae57",
-        transport: .cleartext)
+    // let config = PostgreSQLDatabaseConfig(
+    //     hostname: "",
+    //     port: 5432,
+    //     username: "",
+    //     database: "",
+    //     password: "",
+    //     transport: .cleartext)
 
     let postgres = PostgreSQLDatabase(config: config)
 
