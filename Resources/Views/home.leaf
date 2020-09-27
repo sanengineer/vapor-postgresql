@@ -1,30 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Belajar VaporAPI with Swift</title>
+        <title>Swift PostgreSQL - Simple ReSTAPI </title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- CSS only -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     </head>
     <body>
-        <h1>Juice Corner</h1>
+    <div class="bg-dark">
+    <div class="container-md container-sm">
+        <h1 class="h5 py-3 text-white font-weight-bolder">Vapor SQLite Simple API</h1>
+    </div>
+    </div>
+    <div class="container-md container-sm my-5">
+    <h2 class="h4 font-weight-bolder mt-5">Juice Corner</h2>
         <p>Welcome to Juice Corner!</p>
         <ul>
             #for(juice in juices) {
                 <li>#(juice.name)</li>
             }
         </ul>
-        <h2>Orders</h2>
+        <h2 class="h4 font-weight-bolder">Orders</h2>
         <ul>
             #for(order in orders) {
                 <li>Order #(order.drinkName) for #(order.buyerName) at #date(order.date, "HH:mm, dd-MM-yyyy")</li>
             }
         </ul>
-        <h2>Add new juice</h2>
+        <h2 class="h4 font-weight-bolder">Add New Juice</h2>
         <form method="post" action="/add">
-            <p>Name:<input type="text" name="name"/></p>
-            <p>Description:<input type="text" name="description"/></p>
-            <p>Price:<input type="number" name="price"/></p>
-            <button type="submit">Add</button>    
+            <div class="form-group">
+            <label for="forName">Name</label>
+                <input id="formName" type="text" name="name" class="form-control col-md-4"/>
+            </div>
+            <div class="form-group">
+            <label for="forDescription">Description</label>
+                <input id="forDescription" type="text" name="description" class="form-control col-md-4"/>
+            </div>
+            <div class="form-group">
+            <label for="forPrice">Price</label>
+                <input id="forPrice" type="number" name="price" class="form-control col-md-4"/>
+            </div>
+        <button class="btn btn-success" type="submit">Add</button>    
         </form>
+    </div>
+    <footer class="bg-light text-muted">
+    <div class="container-md container-sm py-3 py-md-5">
+        <p>build with <a href="https://swift.org" class="text-success">swift</a></p>
+    </div>
+    </footer>
     </body>
 </html>
