@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Belajar VaporAPI with Swift</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <h1>Juice Corner</h1>
+        <p>Welcome to Juice Corner!</p>
+        <ul>
+            #for(juice in juices) {
+                <li>#(juice.name)</li>
+            }
+        </ul>
+        <h2>Orders</h2>
+        <ul>
+            #for(order in orders) {
+                <li>Order #(order.drinkName) for #(order.buyerName) at #date(order.date, "HH:mm, dd-MM-yyyy")</li>
+            }
+        </ul>
+        <h2>Add new juice</h2>
+        <form method="post" action="/add">
+            <p>Name:<input type="text" name="name"/></p>
+            <p>Description:<input type="text" name="description"/></p>
+            <p>Price:<input type="number" name="price"/></p>
+            <button type="submit">Add</button>    
+        </form>
+    </body>
+</html>
