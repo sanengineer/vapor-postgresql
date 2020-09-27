@@ -2,7 +2,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "VaporAPI-Belajar-1",
+    name: "vapor-postgresql",
     dependencies: [
         // 💧 A server-side Swift web framework.
         .package(url: "https://github.com/vapor/vapor.git", .upToNextMinor(from: "3.3.0")),

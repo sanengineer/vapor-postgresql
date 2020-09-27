@@ -21,12 +21,17 @@ public func configure(
     try services.register(LeafProvider())
     config.prefer(LeafRenderer.self, for: ViewRenderer.self)
      
+    // Configure Directory Path
+    let directoryConfig = DirectoryConfig.detect()
+    services.register(directoryConfig)
+
     // Register providers first
-    try services.register(FluentPostgreSQLProvider())
+    // try services.register(FluentPostgreSQLProvider()) // Configure to Real PSQL
+    try services.register(FluentProvider()) // Configure to Dummy PSQL
 
     // Configure With Dummy a PostgreSQL database
     var databaseConfig = DatabasesConfig()
-    let db = try PostgreSQLDatabase(storage: .file(path: "\(directoryConfig.workDir)juices.json"))
+    let db = try PostgreSQLDatabase(storage: .file(path: "\(directoryConfig.workDir)juices.db"))
     
     //
     // Ready To Use - Inactivate The Dummy PSQL To Use Code Below
@@ -43,8 +48,8 @@ public func configure(
 
     /// Register the configured PostgreSQL database to the database config.
     // databasesConfig.add(database: postgres, as: .psql) // Configure for real PSQL
-    databasesConfig.add(database: json, as: .psql)  // Configure for dummy PSQL
-    services.register(databasesConfig)
+    databaseConfig.add(database: db, as: .psql)  // Configure for dummy PSQL
+    services.register(databaseConfig)
     
     /// Configure migrations
     var migrations = MigrationConfig()
