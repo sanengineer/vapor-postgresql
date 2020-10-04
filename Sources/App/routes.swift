@@ -44,4 +44,6 @@ public func routes(_ router: Router) throws {
     router.get("orders") { req -> Future<[Order]> in
         return Order.query(on: req).sort(\.id).all()
     }
+
+    print(app.routes.all) // [Route]
 }
