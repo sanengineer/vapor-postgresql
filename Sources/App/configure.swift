@@ -48,8 +48,8 @@ public func configure(
     let config = PostgreSQLDatabaseConfig(
         hostname: "localhost",
         port: 5432,
-        username: "metalbee",
-        database: "JuicesCorner",
+        username: "sanmacair",
+        database: "vapor-postgresql",
         password: nil,
         transport: .cleartext)
     
@@ -69,13 +69,13 @@ public func configure(
     databasesConfig.add(database: postgres, as: .psql) // Configure for real PSQL
     services.register(databasesConfig)
 
-    // let db = try PostgreSQLDatabase(storage: .file(path: "\(directoryConfig.workDir)juices.db"))   
-    // databaseConfig.add(database: db, as: .psql)  // Configure for dummy PSQL
+//     let db = try PostgreSQLDatabase(storage: .file(path: "\(directoryConfig.workDir)juices.db"))
+//     databaseConfig.add(database: db, as: .psql)  // Configure for dummy PSQL
     
     /// Configure migrations
     var migrations = MigrationConfig()
-    migrations.add(model: Juice.self, database: .psql)
-    migrations.add(model: Order.self, database: .psql)
+    migrations.add(model: Juice.self, database: DatabaseIdentifier<Juice.Database>.psql)
+    migrations.add(model: Order.self, database: DatabaseIdentifier<Order.Database>.psql)
     services.register(migrations)
     
 }

@@ -45,5 +45,5 @@ public func routes(_ router: Router) throws {
         return Order.query(on: req).sort(\.id).all()
     }
 
-    print(app.routes.all) // [Route]
+//   print(app.routes.all) // [Route]
 }
