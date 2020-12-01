@@ -4,9 +4,17 @@ Vapor is web framework for Swift, in this project I used 🐘 PostgreSQL for dat
 
 If you need ORM (Object Relational Mapping) SQL or noSQL, Vapor has Fluent.
 
-Prequired:
+## Prequisite:
 
-Vapor Version 3.0
+- 🐦 Swift 4.2.0 (minimum)
+- 💧 Vapor Version 3.0
+- 🐘 PostgreSQL 13.0
+
+## Swift Package List
+
+- Vapor 3.0.0
+- Leaf 3.0.0
+- Fluent PostgreSQL 1.0.0
 
 ## Let's Try My Project
 
