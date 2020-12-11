@@ -13,6 +13,7 @@ on https://vapor-postgresql.herokuapp.com
 - 🐦 Swift 4.2.0 (minimum)
 - 💧 Vapor Version 3.0
 - 🐘 PostgreSQL 13.0
+- 🔨 XCode 10.0 (recomended)
 
 ## Swift Package List
 
